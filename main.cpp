@@ -221,7 +221,7 @@ int Priestess::castGrowSpell(int numPlants)
 {
     for (int i = 0; i < crystals; ++ i)
     {
-        numPlants += 1;
+        ++numPlants;
     }
     std::cout << "Priestess casts grow and " << numPlants << " plants grow immediately" << std::endl;
     return numPlants;
