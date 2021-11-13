@@ -163,7 +163,7 @@ std::string Fighter::fight(std::string weaponUsed)
     if (weaponUsed != "fists")
     {
         std::cout << "Fighter fights with " << weaponUsed << std::endl;
-        return "Fighter fights with " + weapon;
+        return "Fighter fights with " + weaponUsed;
     }
     std::cout << "Fighter fights with fists" << std::endl;
     return "Fighter fights with fists";
@@ -219,7 +219,7 @@ Priestess::~Priestess()
 
 int Priestess::castGrowSpell(int numPlants)
 {
-    for (int i = 0; i < Priestess::crystals; i += 1)
+    for (int i = 0; i < crystals; ++ i)
     {
         numPlants += 1;
     }
@@ -229,22 +229,22 @@ int Priestess::castGrowSpell(int numPlants)
 
 std::string Priestess::castBanish(std::string thingToBeBanished)
 {
-    if (thingToBeBanished != Priestess::leastFavoriteThing)
+    if (thingToBeBanished != leastFavoriteThing)
     {
         std::cout << "Priestess casts banish and " << thingToBeBanished << " are banished for 2 rounds" << std::endl;
-        return "praretess casts banish and " + thingToBeBanished + " are banished for 2 rounds";
+        return "Priestess casts banish and " + thingToBeBanished + " are banished for 2 rounds";
     }
-    std::cout << "Priestess casts banish and " << Priestess::leastFavoriteThing << " are banished for 2 rounds" << std::endl;
-        return "priestess casts banish and " + Priestess::leastFavoriteThing + " are banished for 2 rounds";
+    std::cout << "Priestess casts banish and " << leastFavoriteThing << " are banished for 2 rounds" << std::endl;
+    return "Priestess casts banish and " + leastFavoriteThing + " are banished for 2 rounds";
 }
 
 int Priestess::castIllusions(int numIllusions)
 {
-    int index = Priestess::crystals;
+    int index = crystals;
     while (index > 0)
     {
         numIllusions *= 2;
-        index --;
+        -- index;
     }
     std::cout << "Priestess casts Illusions and " << numIllusions << " illusions appear instantly" << std::endl;
     return numIllusions;
@@ -260,7 +260,7 @@ int Priestess::castIllusions(int numIllusions)
      std::string guild;
      bool secretLanguage;
      double speed = 33.50;
-     class Techniques 
+     struct Techniques 
      {
          Techniques(std::string main);
          ~Techniques();
@@ -295,7 +295,7 @@ bool Thief::performCartwheel(int dexterity)
         std::cout << "Thief performs cartwheels no problem" << std::endl;
         return true;
     }
-    std::cout << "Thief gets caught red-handed trying to steal and amount of" << std::endl;
+    std::cout << "Thief fails to perform a carwheel and is vulnerable to insults for 2 rounds" << std::endl;
     return false;
 }
 
