@@ -56,7 +56,6 @@ If you need inspiration for what to write, take a look at previously approved st
 #include<cstdlib>
 #include <random>
 #include <iostream>
-using namespace std;
 
 struct Wizard 
 {
@@ -67,17 +66,18 @@ struct Wizard
     char rune;
     int age;
     int magicItems;
-    struct Spell{
+    struct Spell
+    {
         Spell();
         ~Spell();
-        string phrase;
-        string ingredient = "mushroom";
+        std::string phrase;
+        std::string ingredient = "mushroom";
         float time = 12.39f;
         int steps = 7;
         bool allowed = true;
     };
 
-    void castSpell(string nameOfSpell);
+    void castSpell(std::string nameOfSpell);
     int runAway(int howFar);
     bool hide(bool hidingPlace);
 };
@@ -88,32 +88,33 @@ rune('Y'),
 age(70),
 magicItems(4)
 {
-    cout <<"CONSTRUCTING Wizard" << " With number of magic languages: " << languages << endl;
+    std::cout <<"CONSTRUCTING Wizard" << " With number of magic languages: " << languages << std::endl;
 }
 
 Wizard::~Wizard()
 {
-    cout << "DESTRUCTING Wizard" << " With number of magic languages: " << languages << endl;
+    std::cout << "DESTRUCTING Wizard" << " With number of magic languages: " << languages << std::endl;
 }
 
-void Wizard::castSpell(string nameOfSpell = "boof!")
+void Wizard::castSpell(std::string nameOfSpell = "boof!")
 {
-    cout << "Wizard casts " << nameOfSpell << endl;
+    std::cout << "Wizard casts " << nameOfSpell << std::endl;
 }
 
 int Wizard::runAway(int howFar)
 {
-    cout << "Wizard runs " << howFar << " feet away." << endl;
+    std::cout << "Wizard runs " << howFar << " feet away." << std::endl;
     return 0;
 }
 
 bool Wizard::hide(bool hidingPlace)
 {
-    if (hidingPlace){
-        cout << "Wizard hides" << endl;
+    if (hidingPlace)
+    {
+        std::cout << "Wizard hides" << std::endl;
         return true;
     }
-    cout << "Wizard hides poorly and is still visible." << endl;
+    std::cout << "Wizard hides poorly and is still visible." << std::endl;
     return false;
 }
 /*
@@ -124,20 +125,21 @@ struct Fighter
     Fighter();
     ~Fighter();
 
-    string weapon;
+    std::string weapon;
     char signet;
-    string armor;
+    std::string armor;
     float money;
-    struct Moves {
+    struct Moves 
+    {
         Moves();
         ~Moves();
-        string bestMove = "swing sword";
-        string worstMove = "seduce enemy";
+        std::string bestMove = "swing sword";
+        std::string worstMove = "seduce enemy";
         bool canBeCalm = false;
         bool fightsDrunk = true;
         bool smellsBad = true;
     };
-    string fight(string weaponUsed);
+    std::string fight(std::string weaponUsed);
     int block(int speed);
     int drink(int stamina);
 };
@@ -148,28 +150,28 @@ signet('L'),
 armor("none"),
 money(0.0f)
 {
-    cout <<"CONSTRUCTING Fighter with" << weapon  << endl;
+    std::cout <<"CONSTRUCTING Fighter with" << weapon  << std::endl;
 }
 
 Fighter::~Fighter()
 {
-    cout << "DESTRUCTING Fighter" << endl;
+    std::cout << "DESTRUCTING Fighter" << std::endl;
 }
 
-string Fighter::fight(string weaponUsed)
+std::string Fighter::fight(std::string weaponUsed)
 {
     if (weaponUsed != "fists")
     {
-        cout << "Fighter fights with " << weaponUsed << endl;
+        std::cout << "Fighter fights with " << weaponUsed << std::endl;
         return "Fighter fights with " + weapon;
     }
-    cout << "Fighter fights with fists" << endl;
+    std::cout << "Fighter fights with fists" << std::endl;
     return "Fighter fights with fists";
 }
 
 int Fighter::block(int speed)
 {
-    cout << "Fighter blocks with a speed of " << speed << endl;
+    std::cout << "Fighter blocks with a speed of " << speed << std::endl;
     return speed;
 }
 
@@ -177,96 +179,98 @@ int Fighter::drink(int stamina)
 {
     if (stamina > 12)
     {
-        cout << "Fighter manages to drink another round!";
+        std::cout << "Fighter manages to drink another round!";
         return 0;
     }
-    cout << "Unable to hold his drink the Fighter collapses" << endl;
+    std::cout << "Unable to hold his drink the Fighter collapses" << std::endl;
     return 1;
 }
 /*
  UDT 3:
  */
-struct Preistess 
+struct Priestess 
 {
-    Preistess();
-    ~Preistess();
-    string favoriteFood;
-    string leastFavoriteThing;
+    Priestess();
+    ~Priestess();
+    std::string favoriteFood;
+    std::string leastFavoriteThing;
     int crystals;
     int illusions;
-    string home;
+    std::string home;
     int castGrowSpell(int numPlants = 1);
-    string castBanish(string thingToBeBanished);
+    std::string castBanish(std::string thingToBeBanished);
     int castIllusions(int numIllusions = 1);
 };
 
-Preistess::Preistess() :
+Priestess::Priestess() :
 favoriteFood("Salad"),
 leastFavoriteThing("Bad Smells"),
 crystals(12),
 illusions(20),
 home("Tree house")
 {
-    cout << "CONSTRUCTING Preistess with " << crystals << " ctrystals"  << endl;
+    std::cout << "CONSTRUCTING Priestess with " << crystals << " ctrystals"  << std::endl;
 }
 
-Preistess::~Preistess()
+Priestess::~Priestess()
 {
-    cout << "Deconstructing Preistess" << endl;
+    std::cout << "Deconstructing Priestess" << std::endl;
 }
 
-int Preistess::castGrowSpell(int numPlants)
+int Priestess::castGrowSpell(int numPlants)
 {
-    for (int i = 0; i < Preistess::crystals; i += 1)
+    for (int i = 0; i < Priestess::crystals; i += 1)
     {
         numPlants += 1;
     }
-    cout << "Priestess casts grow and " << numPlants << " plants grow immediately" << endl;
+    std::cout << "Priestess casts grow and " << numPlants << " plants grow immediately" << std::endl;
     return numPlants;
 }
 
-string Preistess::castBanish(string thingToBeBanished)
+std::string Priestess::castBanish(std::string thingToBeBanished)
 {
-    if (thingToBeBanished != Preistess::leastFavoriteThing)
+    if (thingToBeBanished != Priestess::leastFavoriteThing)
     {
-        cout << "Preistess casts banish and " << thingToBeBanished << " are banished for 2 rounds" << endl;
+        std::cout << "Priestess casts banish and " << thingToBeBanished << " are banished for 2 rounds" << std::endl;
         return "praretess casts banish and " + thingToBeBanished + " are banished for 2 rounds";
     }
-    cout << "Preistess casts banish and " << Preistess::leastFavoriteThing << " are banished for 2 rounds" << endl;
-        return "preistess casts banish and " + Preistess::leastFavoriteThing + " are banished for 2 rounds";
+    std::cout << "Priestess casts banish and " << Priestess::leastFavoriteThing << " are banished for 2 rounds" << std::endl;
+        return "priestess casts banish and " + Priestess::leastFavoriteThing + " are banished for 2 rounds";
 }
 
-int Preistess::castIllusions(int numIllusions)
+int Priestess::castIllusions(int numIllusions)
 {
-    int index = Preistess::crystals;
+    int index = Priestess::crystals;
     while (index > 0)
     {
         numIllusions *= 2;
         index --;
     }
-    cout << "Preistess casts Illusions and " << numIllusions << " illusions appear instantly" << endl;
+    std::cout << "Priestess casts Illusions and " << numIllusions << " illusions appear instantly" << std::endl;
     return numIllusions;
 }
 /*
  new UDT 4:
  */
- struct Thief {
+ struct Thief 
+ {
      Thief();
      ~Thief();
      int tools;
-     string guild;
+     std::string guild;
      bool secretLanguage;
      double speed = 33.50;
-     class Techniques {
-         Techniques(string main);
+     class Techniques 
+     {
+         Techniques(std::string main);
          ~Techniques();
-         string main = "sneak";
-         string second = "climb";
-         string third = "back stab";
-         string fourth = "pick pocket";
-         string fifth = "read lips";
+         std::string main = "sneak";
+         std::string second = "climb";
+         std::string third = "back stab";
+         std::string fourth = "pick pocket";
+         std::string fifth = "read lips";
      };
-     bool cartwheel(int dexterity = 13);
+     bool performCartwheel(int dexterity = 13);
      bool smoothTalk();
      float steal(float amount = 50.00f);
  };
@@ -276,21 +280,22 @@ int Preistess::castIllusions(int numIllusions)
  guild("Secret"),
  secretLanguage(true)
  {
-     cout << "CONSTRUCTING Thief with " << guild << " guild" << endl;
+     std::cout << "CONSTRUCTING Thief with " << guild << " guild" << std::endl;
  }
 
  Thief::~Thief()
  {
-     cout << "DECONSTRUCTING Thief" << endl;
+     std::cout << "DECONSTRUCTING Thief" << std::endl;
  }
 
-bool Thief::cartwheel(int dexterity)
+bool Thief::performCartwheel(int dexterity)
 {
-    if (dexterity >= 13  ){
-        cout << "Theif carwheels no problem" << endl;
+    if (dexterity >= 13  )
+    {
+        std::cout << "Thief performs cartwheels no problem" << std::endl;
         return true;
     }
-    cout << "Theif fails at a cartwheel and is vulnerable to insults" << endl;
+    std::cout << "Thief gets caught red-handed trying to steal and amount of" << std::endl;
     return false;
 }
 
@@ -305,11 +310,12 @@ int randomNum()
 
 bool Thief::smoothTalk()
 {
-    if (randomNum() > 11){
-        cout << "Theif smooth talks effectively" << endl;
+    if (randomNum() > 11)
+    {
+        std::cout << "Theif smooth talks effectively" << std::endl;
         return true;
     }
-    cout << "Theif thinks he's so smooth but is not" << endl;
+    std::cout << "Theif thinks he's so smooth but is not" << std::endl;
     return false;
 }
 
@@ -317,54 +323,55 @@ float Thief::steal(float amount)
 {
     if (randomNum() > 10)
     {
-        cout << "Theif steals amount of " << amount << endl;
+        std::cout << "Theif steals amount of " << amount << std::endl;
         return amount; 
     }
-    cout << "Theif gets caught red handed trying to steal and amount of " << amount << endl;
+    std::cout << "Theif gets caught red handed trying to steal and amount of " << amount << std::endl;
     return amount;
 }
 
 /*
  new UDT 5:
  */
-struct Bard {
+struct Bard 
+{
     Bard();
     ~Bard();
-    string instrument;
+    std::string instrument;
     bool sings = true;
     bool loud = true;
-    string bestAsset = "Looks";
+    std::string bestAsset = "Looks";
     int songs = 99;
     double beautyRest(double time = 12.00);
-    string playMusic(string nameOfSong = "Did it all myself");
+    std::string playMusic(std::string nameOfSong = "Did it all myself");
     float jump(float howHigh = 6.0f);
 };
 Bard::Bard() :
 instrument("Lute")
 {
-    cout << "CONSTRUCTING Bard with " << Bard::instrument << endl;
+    std::cout << "CONSTRUCTING Bard with " << Bard::instrument << std::endl;
 }
 
 Bard::~Bard()
 {
-    cout << "DECONSTRUCTING Bard " << endl;
+    std::cout << "DECONSTRUCTING Bard " << std::endl;
 }
 
 double Bard::beautyRest(double time)
 {
-    cout << "Bard gets needed beauty rest for " << time << " hours." << endl;
+    std::cout << "Bard gets needed beauty rest for " << time << " hours." << std::endl;
     return time;
 }
 
-string Bard::playMusic(string nameOfSong)
+std::string Bard::playMusic(std::string nameOfSong)
 {
-    cout << "Bard plays " << nameOfSong << endl;
+    std::cout << "Bard plays " << nameOfSong << std::endl;
     return nameOfSong;
 }
 
 float Bard::jump(float howHigh)
 {
-    cout << "Bard jumps " << howHigh << " feet" << endl;
+    std::cout << "Bard jumps " << howHigh << " feet" << std::endl;
     return howHigh;
 }
 
@@ -386,18 +393,18 @@ int main()
     Fizban.castSpell("boof!");
     Fizban.runAway(30);
     Fizban.hide(false);
-    cout << "Haha! Fizban of " << Fizban.age << " years boofed you!" << endl;
+    std::cout << "Haha! Fizban of " << Fizban.age << " years boofed you!" << std::endl;
     Fighter Mooky;
     Mooky.fight("mace");
     Mooky.block(66);
     Mooky.drink(11);
-    cout << "Haha! Mooky with the signet " << Mooky.signet << " gets dragged off by gnomes" << endl;
-    Preistess Pearl;
+    std::cout << "Haha! Mooky with the signet " << Mooky.signet << " gets dragged off by gnomes" << std::endl;
+    Priestess Pearl;
     Pearl.castGrowSpell(7);
     Pearl.castBanish("Bad Smells");
     Pearl.castIllusions(7);
     Thief Smarkles;
-    Smarkles.cartwheel(13);
+    Smarkles.performCartwheel(13);
     Smarkles.smoothTalk();
     Smarkles.steal(100.00f);
     Bard Fabio;
@@ -406,8 +413,8 @@ int main()
     Fabio.jump(5.0f);
     Wizard Barth;
     Fighter Marmy;
-    Preistess periwinkle;
-    Thief sammy;
+    Priestess Periwinkle;
+    Thief Sammy;
     Bard Ahsia;
     std::cout << "good to go!" << std::endl;
 }
