@@ -82,7 +82,7 @@ struct Wizard
 {
     Wizard();
     ~Wizard();
-
+    std::string name;
     int languages;
     char rune;
     int age;
@@ -101,6 +101,10 @@ struct Wizard
     void castSpell(std::string nameOfSpell);
     int runAway(int howFar);
     bool hide(bool hidingPlace);
+    void diss()
+    {
+        std::cout << "Haha! " << this->name <<  " of "  << this->age << " years boofed you!" << std::endl;
+    }
 };
 
 Wizard::Wizard() :
@@ -145,7 +149,7 @@ struct Fighter
 {
     Fighter();
     ~Fighter();
-
+    std::string name;
     std::string weapon;
     char signet;
     std::string armor;
@@ -163,6 +167,10 @@ struct Fighter
     std::string fight(std::string weaponUsed);
     int block(int speed);
     int drink(int stamina);
+    void getLaughedAt()
+    {
+        std::cout << "Haha! " <<  this->name << " with the signet " << this->signet << " gets dragged off by gnomes" << std::endl;
+    }
 };
 
 Fighter::Fighter() :
@@ -411,15 +419,19 @@ float Bard::jump(float howHigh)
 int main()
 {
     Wizard Fizban;
+    Fizban.name = "Fizban";
     Fizban.castSpell("boof!");
     Fizban.runAway(30);
     Fizban.hide(false);
     std::cout << "Haha! Fizban of " << Fizban.age << " years boofed you!" << std::endl;
+    Fizban.diss();
     Fighter Mooky;
+    Mooky.name = "Mooky";
     Mooky.fight("mace");
     Mooky.block(66);
     Mooky.drink(11);
     std::cout << "Haha! Mooky with the signet " << Mooky.signet << " gets dragged off by gnomes" << std::endl;
+    Mooky.getLaughedAt();
     Priestess Pearl;
     Pearl.castGrowSpell(7);
     Pearl.castBanish("Bad Smells");
