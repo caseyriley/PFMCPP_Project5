@@ -68,9 +68,6 @@ void someMemberFunction(const Axe& axe);
    with the other warning suppression flags
  */
 
-
-
-
 /*
  UDT 1:
  */
@@ -79,6 +76,7 @@ void someMemberFunction(const Axe& axe);
 #include<cstdlib>
 #include <random>
 #include <iostream>
+#include "LeakedObjectDetector.h"
 
 struct Wizard 
 {
@@ -107,6 +105,7 @@ struct Wizard
     {
         std::cout << "Haha! " << this->name <<  " of "  << this->age << " years boofed you!" << std::endl;
     }
+    JUCE_LEAK_DETECTOR(Wizard)
 };
 
 Wizard::Wizard() :
@@ -144,6 +143,18 @@ bool Wizard::hide(bool hidingPlace)
     std::cout << "Wizard hides poorly and is still visible." << std::endl;
     return false;
 }
+
+struct WizardWrapper
+{
+    WizardWrapper( Wizard* ptr ) : pointerToWizard( ptr ){}
+    ~WizardWrapper()
+    {
+        delete pointerToWizard;
+    }
+
+    Wizard* pointerToWizard = nullptr;
+};
+
 /*
  UDT 2:
  */
@@ -173,6 +184,7 @@ struct Fighter
     {
         std::cout << "Haha! " <<  this->name << " with the signet " << this->signet << " gets dragged off by gnomes" << std::endl;
     }
+    JUCE_LEAK_DETECTOR(Fighter)
 };
 
 Fighter::Fighter() :
@@ -216,6 +228,18 @@ int Fighter::drink(int stamina)
     std::cout << "Unable to hold his drink the Fighter collapses" << std::endl;
     return 1;
 }
+
+struct FighterWrapper
+{
+    FighterWrapper( Fighter* ptr ) : pointerToFighter( ptr ){}
+    ~FighterWrapper()
+    {
+        delete pointerToFighter;
+    }
+
+    Fighter* pointerToFighter = nullptr;
+};
+
 /*
  UDT 3:
  */
@@ -231,6 +255,7 @@ struct Priestess
     int castGrowSpell(int numPlants = 1);
     std::string castBanish(std::string thingToBeBanished);
     int castIllusions(int numIllusions = 1);
+    JUCE_LEAK_DETECTOR(Priestess)
 };
 
 Priestess::Priestess() :
@@ -280,6 +305,17 @@ int Priestess::castIllusions(int numIllusions)
     std::cout << "Priestess casts Illusions and " << numIllusions << " illusions appear instantly" << std::endl;
     return numIllusions;
 }
+
+struct PriestessWrapper
+{
+    PriestessWrapper( Priestess* ptr) : pointerToPriestess( ptr ){}
+    ~PriestessWrapper()
+    {
+        delete pointerToPriestess;
+    }
+
+    Priestess* pointerToPriestess = nullptr;
+};
 /*
  new UDT 4:
  */
@@ -304,6 +340,7 @@ int Priestess::castIllusions(int numIllusions)
      bool performCartwheel(int dexterity = 13);
      bool smoothTalk();
      float steal(float amount = 50.00f);
+     JUCE_LEAK_DETECTOR(Thief)
  };
 
  Thief::Thief() :
@@ -361,6 +398,17 @@ float Thief::steal(float amount)
     return amount;
 }
 
+ struct ThiefWrapper
+ {
+     ThiefWrapper( Thief* ptr) : pointerToThief( ptr ){}
+     ~ThiefWrapper()
+     {
+         delete pointerToThief;
+     }
+
+     Thief* pointerToThief = nullptr;
+ };
+
 /*
  new UDT 5:
  */
@@ -376,7 +424,9 @@ struct Bard
     double beautyRest(double time = 12.00);
     std::string playMusic(std::string nameOfSong = "Did it all myself");
     float jump(float howHigh = 6.0f);
+    JUCE_LEAK_DETECTOR(Bard)
 };
+
 Bard::Bard() :
 instrument("Lute")
 {
@@ -406,6 +456,17 @@ float Bard::jump(float howHigh)
     return howHigh;
 }
 
+struct BardWrapper
+{
+    BardWrapper( Bard* ptr) : pointerToBard( ptr){}
+    ~BardWrapper()
+    {
+        delete pointerToBard;
+    }
+
+    Bard* pointerToBard = nullptr;
+};
+
 /*
  MAKE SURE YOU ARE NOT ON THE MASTER BRANCH
  Commit your changes by clicking on the Source Control panel on the left, entering a message, and click [Commit and push].
@@ -420,36 +481,36 @@ float Bard::jump(float howHigh)
 
 int main()
 {
-    Wizard Fizban;
-    Fizban.name = "Fizban";
-    Fizban.castSpell("boof!");
-    Fizban.runAway(30);
-    Fizban.hide(false);
-    std::cout << "Haha! Fizban of " << Fizban.age << " years boofed you!" << std::endl;
-    Fizban.diss();
-    Fighter Mooky;
-    Mooky.name = "Mooky";
-    Mooky.fight("mace");
-    Mooky.block(66);
-    Mooky.drink(11);
-    std::cout << "Haha! Mooky with the signet " << Mooky.signet << " gets dragged off by gnomes" << std::endl;
-    Mooky.getLaughedAt();
-    Priestess Pearl;
-    Pearl.castGrowSpell(7);
-    Pearl.castBanish("Bad Smells");
-    Pearl.castIllusions(7);
-    Thief Smarkles;
-    Smarkles.performCartwheel(13);
-    Smarkles.smoothTalk();
-    Smarkles.steal(100.00f);
-    Bard Fabio;
-    Fabio.beautyRest();
-    Fabio.playMusic();
-    Fabio.jump(5.0f);
-    Wizard Barth;
-    Fighter Marmy;
-    Priestess Periwinkle;
-    Thief Sammy;
-    Bard Ahsia;
+    WizardWrapper Fizban( new Wizard() );
+    Fizban.pointerToWizard->name = "Fizban";
+    Fizban.pointerToWizard->castSpell("boof!");
+    Fizban.pointerToWizard->runAway(30);
+    Fizban.pointerToWizard->hide(false);
+    std::cout << "Haha! Fizban of " << Fizban.pointerToWizard->age << " years boofed you!" << std::endl;
+    Fizban.pointerToWizard->diss();
+    FighterWrapper Mooky( new Fighter() );
+    Mooky.pointerToFighter->name = "Mooky";
+    Mooky.pointerToFighter->fight("mace");
+    Mooky.pointerToFighter->block(66);
+    Mooky.pointerToFighter->drink(11);
+    std::cout << "Haha! Mooky with the signet " << Mooky.pointerToFighter->signet << " gets dragged off by gnomes" << std::endl;
+    Mooky.pointerToFighter->getLaughedAt();
+    PriestessWrapper Pearl( new Priestess() );
+    Pearl.pointerToPriestess->castGrowSpell(7);
+    Pearl.pointerToPriestess->castBanish("Bad Smells");
+    Pearl.pointerToPriestess->castIllusions(7);
+    ThiefWrapper Smarkles( new Thief() );
+    Smarkles.pointerToThief->performCartwheel(13);
+    Smarkles.pointerToThief->smoothTalk();
+    Smarkles.pointerToThief->steal(100.00f);
+    BardWrapper Fabio( new Bard() );
+    Fabio.pointerToBard->beautyRest();
+    Fabio.pointerToBard->playMusic();
+    Fabio.pointerToBard->jump(5.0f);
+    WizardWrapper Barth( new Wizard() );
+    FighterWrapper Marmy( new Fighter() );
+    PriestessWrapper Periwinkle( new Priestess() );
+    ThiefWrapper Sammy( new Thief() );
+    BardWrapper Ahsia( new Bard() );
     std::cout << "good to go!" << std::endl;
 }
